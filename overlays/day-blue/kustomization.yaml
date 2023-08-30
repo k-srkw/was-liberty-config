@@ -1,0 +1,14 @@
+bases:
+- ../../base
+
+namePrefix: day-blue-
+
+## 各リソースにラベルを自動追加する
+commonLabels:
+  environment: day-blue
+
+## image 参照先を置換する
+images:
+  - name: liberty-app-imagestream
+    newName: image-registry.openshift-image-registry.svc:5000/eztrade/liberty-app-imagestream
+    newTag: 0.1.0

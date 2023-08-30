@@ -1,0 +1,5 @@
+## kustomize 管理対象 Manifest ファイルのリスト
+resources:
+- deployment.yaml
+- service.yaml
+- serviceaccount.yaml

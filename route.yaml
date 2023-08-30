@@ -10,7 +10,7 @@ metadata:
   name: was-liberty-app
 spec:
   port:
-    targetPort: 9443-tcp
+    targetPort: 9080-tcp
   tls:
     termination: edge
   to:
