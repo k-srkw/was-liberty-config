@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/instance: was-liberty-app
+    app.kubernetes.io/name: was-liberty-app
+    app.kubernetes.io/part-of: was-liberty-app
+    liberty.websphere.ibm.com/name: was-liberty-app
+  name: was-liberty-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: was-liberty-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        productChargedContainers: app
+        productID: e7daacc46bbe4e2dacd2af49145a4723
+        productMetric: PROCESSOR_VALUE_UNIT
+        productName: IBM WebSphere Application Server
+      labels:
+        app.kubernetes.io/component: backend
+        app.kubernetes.io/instance: was-liberty-app
+        app.kubernetes.io/name: was-liberty-app
+        app.kubernetes.io/part-of: was-liberty-app
+        liberty.websphere.ibm.com/name: was-liberty-app
+    spec:
+      containers:
+      - env:
+        - name: WLP_LOGGING_CONSOLE_FORMAT
+          value: SIMPLE
+        - name: WLP_LOGGING_CONSOLE_LOGLEVEL
+          value: info
+        - name: WLP_LOGGING_CONSOLE_SOURCE
+          value: message,trace,accessLog,ffdc,audit
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: LANG
+          value: ja_JP.UTF-8
+        - name: LANGUAGE
+          value: ja_JP.UTF-8
+        - name: LC_ALL
+        - name: logger
+          value: ja_JP.UTF-8
+        - name: TZ
+          value: Asia/Tokyo
+        - name: TLS_DIR
+          value: /etc/x509/certs
+        - name: SEC_IMPORT_K8S_CERTS
+          value: "true"
+        image: liberty-app-imagestream:0.1.0
+        imagePullPolicy: IfNotPresent
+        name: app
+        ports:
+        - containerPort: 9443
+          name: 9443-tcp
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 200m
+            memory: 500Mi
+          limits:
+            memory: 500Mi
+        livenessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /health/live
+            port: 9443
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /health/ready
+            port: 9443
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /logs
+          name: logs
+      - image: registry.connect.redhat.com/ibm/ibm-semeru-runtime-certified-jdk-17-ubi:17.0.7.0
+        imagePullPolicy: IfNotPresent
+        name: logger
+        args:
+        - sleep infinity
+        command:
+        - /bin/bash
+        - -c
+        - --
+        resources:
+          requests:
+            cpu: 200m
+            memory: 500Mi
+          limits:
+            memory: 500Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /logs
+          name: logs
+      restartPolicy: Always
+      serviceAccountName: was-liberty-app
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: logs
+        emptyDir: {}
+        #persistentVolumeClaim:
+        #  claimName: nfs-log-volume

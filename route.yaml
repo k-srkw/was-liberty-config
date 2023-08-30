@@ -1,0 +1,19 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/instance: was-liberty-app
+    app.kubernetes.io/name: was-liberty-app
+    app.kubernetes.io/part-of: was-liberty-app
+    liberty.websphere.ibm.com/name: was-liberty-app
+  name: was-liberty-app
+spec:
+  port:
+    targetPort: 9443-tcp
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: was-liberty-app
+    weight: 100

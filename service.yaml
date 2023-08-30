@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/instance: was-liberty-app
+    app.kubernetes.io/name: was-liberty-app
+    app.kubernetes.io/part-of: was-liberty-app
+    liberty.websphere.ibm.com/name: was-liberty-app
+  name: was-liberty-app
+spec:
+  type: ClusterIP
+  ports:
+  - name: 9443-tcp
+    port: 9443
+    protocol: TCP
+    targetPort: 9443
+  selector:
+    app.kubernetes.io/instance: was-liberty-app
