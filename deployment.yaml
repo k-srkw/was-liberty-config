@@ -70,16 +70,16 @@ spec:
             memory: 500Mi
           limits:
             memory: 500Mi
-        livenessProbe:
-          httpGet:
-            scheme: HTTP
-            path: /health/live
-            port: 9443
-        readinessProbe:
-          httpGet:
-            scheme: HTTP
-            path: /health/ready
-            port: 9443
+        #livenessProbe:
+        #  httpGet:
+        #    scheme: HTTP
+        #    path: /health/live
+        #    port: 9443
+        #readinessProbe:
+        #  httpGet:
+        #    scheme: HTTP
+        #    path: /health/ready
+        #    port: 9443
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
