@@ -1,3 +1,4 @@
 ## kustomize 管理対象 Manifest ファイルのリスト
 resources:
 - route.yaml
+- route-dev.yaml

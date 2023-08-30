@@ -12,3 +12,7 @@ images:
   - name: liberty-app-imagestream
     newName: image-registry.openshift-image-registry.svc:5000/eztrade/liberty-app-imagestream
     newTag: 0.1.0
+
+replicas:
+- name: was-liberty-app
+  count: 2

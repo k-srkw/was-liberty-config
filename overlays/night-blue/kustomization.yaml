@@ -1,11 +1,11 @@
 bases:
 - ../../base
 
-namePrefix: day-green-
+namePrefix: night-blue-
 
 ## 各リソースにラベルを自動追加する
 commonLabels:
-  environment: day-green
+  environment: night-blue
 
 ## image 参照先を置換する
 images:
@@ -15,4 +15,4 @@ images:
 
 replicas:
 - name: was-liberty-app
-  count: 0
+  count: 1

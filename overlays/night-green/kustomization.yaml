@@ -1,11 +1,11 @@
 bases:
 - ../../base
 
-namePrefix: day-green-
+namePrefix: night-green-
 
 ## 各リソースにラベルを自動追加する
 commonLabels:
-  environment: day-green
+  environment: night-green
 
 ## image 参照先を置換する
 images:
