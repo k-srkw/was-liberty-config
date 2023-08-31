@@ -15,5 +15,5 @@ spec:
     termination: edge
   to:
     kind: Service
-    name: day-blue-was-liberty-app
+    name: day-green-was-liberty-app
     weight: 100
