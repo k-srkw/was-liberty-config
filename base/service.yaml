@@ -7,6 +7,7 @@ metadata:
     app.kubernetes.io/name: was-liberty-app
     app.kubernetes.io/part-of: was-liberty-app
     liberty.websphere.ibm.com/name: was-liberty-app
+    environment: base
   name: was-liberty-app
 spec:
   type: ClusterIP
@@ -17,3 +18,4 @@ spec:
     targetPort: 9080
   selector:
     app.kubernetes.io/instance: was-liberty-app
+    environment: base
